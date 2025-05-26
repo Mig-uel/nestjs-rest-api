@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
+import type { CreateUserDto } from './dto/create-user.dto';
+import type { UpdateUserDto } from './dto/update-user.dto';
 
 type UserRole = 'ADMIN' | 'ENGINEER' | 'INTERN';
 export type User = {
@@ -70,7 +72,7 @@ export class UsersService {
    * @param user User data (no id)
    * @returns Created user
    */
-  create(user: Omit<User, 'id'>) {
+  create(user: CreateUserDto) {
     const newUser: User = {
       ...user,
       id: randomUUID(),
@@ -85,7 +87,7 @@ export class UsersService {
    * @param updatedUser Partial user data
    * @returns Updated user or {}
    */
-  update(id: string, updatedUser: Partial<User>) {
+  update(id: string, updatedUser: UpdateUserDto) {
     const existingUser = this.users.find((user) => user.id === id);
 
     if (!existingUser) return {};
